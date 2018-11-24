@@ -1,0 +1,23 @@
+{
+  "name": "izi-config",
+  "version": "1.0.0",
+  "description": "Configuration handler for izi-app",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "configuration"
+  ],
+  "author": "kcwiakala",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "log4js": "^3.0.6"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "rereq": "^0.3.1"
+  }
+}

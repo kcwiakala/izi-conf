@@ -1,0 +1,10 @@
+{
+  "optional": ["./local.json"],
+  "common": {
+    "name": "default",
+    "database": "{{ include(./database.json) }}"
+  },
+  "prod": {
+    "name": "default_prod"
+  }
+}
