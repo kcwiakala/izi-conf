@@ -1,5 +1,6 @@
 {
-  "optional": ["./local.json"],
+  "phase": ["env(NODE_ENV)", "arg(p)", "arg(dev)", "arg(prod)"],
+  "include": ["./local.json"],
   "common": {
     "name": "default",
     "database": "{{ include(./database.json) }}"

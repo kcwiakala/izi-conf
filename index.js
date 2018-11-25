@@ -2,8 +2,8 @@
 const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
-const log4js = require('log4js');
 const loader = require('./lib/loader');
+const PhaseResolver = require('./lib/phaseResolver');
 
 const ROOT_DIR = path.dirname(require.main.filename);
 const DEFAULT_CONFIG = path.join(ROOT_DIR, 'conf/default.json') ;
@@ -16,17 +16,13 @@ let _conf = {
   require: module => require(path.join(ROOT_DIR, module))
 };
 
-// Load config file with all its dependencies
-function load(config_file) {
-  const modules = loader(config_file);
-  // console.log(modules);
-  return {};
-}
-
 // Initialize configuration object
 function init(config_file) {
-  const configuration = load(config_file);
-  _.merge(_conf, configuration);
+  const modules = loader(config_file);
+  const main = modules[config_file];
+  const phaseResolver = new PhaseResolver(main.phase);
+  main.resolve(phaseResolver.resolve(), modules);
+  _.merge(_conf, main.resolved);
 }
 
 if(fs.existsSync(DEFAULT_CONFIG)) {

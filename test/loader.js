@@ -11,12 +11,4 @@ describe('Loader', () => {
     const file = path.join(__dirname, 'conf/cycle.json');
     expect(() => loader(file)).to.throw(Error, /Cycle detected/); 
   });
-
-  it('Should replace all dependencies relative paths to absolute', () => {
-    const file = path.join(__dirname, 'conf/default.json');
-    let modules = loader(file);
-    // expect(modules).to.have.property(file);
-    // expect(modules[file]).to.contain(path.join(__dirname, 'conf/database.json'));
-    console.log(modules[file].resolve('prod', modules));
-  });
 });
