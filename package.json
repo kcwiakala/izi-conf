@@ -1,10 +1,10 @@
 {
   "name": "izi-config",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Configuration handler for izi-app",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/kcwiakala/izi-config.git"
+    "type": "git",
+    "url": "https://github.com/kcwiakala/izi-config.git"
   },
   "main": "index.js",
   "scripts": {
