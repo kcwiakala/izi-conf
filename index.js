@@ -20,7 +20,7 @@ let _conf = {
 function init(config_file) {
   const modules = loader(config_file);
   const main = modules[config_file];
-  const phaseResolver = new PhaseResolver(main.phase);
+  const phaseResolver = new PhaseResolver(main.json.phase);
   main.resolve(phaseResolver.resolve(), modules);
   _.merge(_conf, main.resolved);
 }
