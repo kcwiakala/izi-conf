@@ -8,12 +8,13 @@ const PhaseResolver = require('./lib/phaseResolver');
 const ROOT_DIR = path.dirname(require.main.filename);
 const DEFAULT_CONFIG = path.join(ROOT_DIR, 'conf/default.json') ;
 
-const keywords = ['root', 'require', 'include', 'common', 'prod', 'phase'];
+const keywords = ['root', 'require', 'phase', 'warnings'];
 
 // Configuration object
 let _conf = {
   root: ROOT_DIR, 
-  require: module => require(path.join(ROOT_DIR, module))
+  require: module => require(path.join(ROOT_DIR, module)),
+  warnings: []
 };
 
 // Initialize configuration object
@@ -21,8 +22,17 @@ function init(config_file) {
   const modules = loader(config_file);
   const main = modules[config_file];
   const phaseResolver = new PhaseResolver(main.json.phase);
-  main.resolve(phaseResolver.resolve(), modules);
-  _.merge(_conf, main.resolved);
+  _conf.phase = phaseResolver.resolve();
+  main.resolve(_conf.phase, modules);
+
+  let conf = main.resolved;
+  _.forEach(keywords, keyword => {
+    if(_.has(conf, keyword)) {
+      _.unset(conf, keyword);
+      _conf.warnings.push(`"${keyword}" is a reserved keyword and should not be used`);
+    }
+  });
+  _.merge(_conf, conf);
 }
 
 if(fs.existsSync(DEFAULT_CONFIG)) {
